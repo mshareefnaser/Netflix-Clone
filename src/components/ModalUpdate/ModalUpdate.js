@@ -1,4 +1,4 @@
-//ModalMovie.js
+//ModalUpdate.js
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -6,19 +6,19 @@ import Modal from 'react-bootstrap/Modal';
 import Card from 'react-bootstrap/Card';
 import axios from 'axios';
 
-function ModalMovie(props) {
+function ModalUpdate(props) {
     const { show, close, data } = props;
-    const serverUrl = `${process.env.REACT_APP_serverURL}/newmovies`;
+    const serverUrl = `${process.env.REACT_APP_serverURL}/newmovies/${data.movie_id}`;
     const [comment, setComment] = useState('');
     const handleAddToFavorites = () => {
         const obj = {
-        movie_name: data.title,
+        movie_name: data.movie_name,
         movie_comments:comment,
-        movie_overview:data.overview,
+        movie_overview:data.movie_overview,
         poster_path:data.poster_path,
         release_date:data.release_date
         };
-        axios.post(serverUrl, obj)
+        axios.put(serverUrl, obj)
         .then((response) => {console.log(response.data)})
         .catch((error) => {console.log(error)});
         close();
@@ -39,7 +39,7 @@ function ModalMovie(props) {
           controlId="exampleForm.ControlTextarea1"
         >
           <Form.Label>Add your comment</Form.Label>
-          <Form.Control as="textarea" rows={3} onChange={(e) => setComment(e.target.value)} />
+          <Form.Control as="textarea" rows={3} defaultValue={data.movie_comments} onChange={(e) => setComment(e.target.value)} />
         </Form.Group>
       </Form>
     </Modal.Body>
@@ -48,7 +48,7 @@ function ModalMovie(props) {
         Close
       </Button>
       <Button variant="primary"  onClick={handleAddToFavorites}>
-        Add to favorites
+        Update
       </Button>
     </Modal.Footer>
   </Modal>
@@ -56,4 +56,4 @@ function ModalMovie(props) {
 );
 }
 
-export default ModalMovie;
+export default ModalUpdate;
