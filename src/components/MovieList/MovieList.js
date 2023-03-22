@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/Col';
 function MovieList(props) {
     return (
         <>
-            <h1>Movie List</h1>
             <Row xs={1} md={4} className="g-4">
                 {props.trendingMovies.map((trendingMovie) => {
                     return <Col>
